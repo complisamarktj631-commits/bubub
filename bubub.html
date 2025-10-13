@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our 1st Monthsary 💕</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:wght@400;700&family=Cinzel:wght@400&display=swap" rel="stylesheet">
+    <style>
+        /* Global Coquette Theme Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #f8d7e3 50%, #ffd1dc 100%);
+            color: #4a2c3a;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        /* Decorative Elements */
+        .bow {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: #ff69b4;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            transform: rotate(-45deg);
+            z-index: 10;
+        }
+        .bow::before, .bow::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: #ff1493;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+        .bow::before {
+            transform: rotate(90deg) translate(25px, -25px);
+        }
+        .bow::after {
+            transform: rotate(-90deg) translate(-25px, -25px);
+        }
+        .lace-border {
+            border: 2px dashed #ffb6c1;
+            border-radius: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            position: relative;
+        }
+        .lace-border::before {
+            content: '✿';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            color: #ff69b4;
+        }
+        /* Heart Animation */
+        .heart {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 100px;
+            color: #ff1493;
+            cursor: pointer;
+            animation: pulse 2s infinite;
+            z-index: 5;
+            transition: transform 0.3s ease;
+        }
+        .heart:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.2); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+        .heart-clicked {
+            animation: bounce 1s infinite;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translate(-50%, -50%) translateY(0); }
+            40% { transform: translate(-50%, -50%) translateY(-20px); }
+            60% { transform: translate(-50%, -50%) translateY(-10px); }
+        }
+        /* Navigation Menu */
+        .menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 182, 193, 0.95);
+            z-index: 20;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .menu.show {
+            display: flex;
+        }
+        .menu h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3em;
+            color: #ff1493;
+            margin-bottom: 50px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        .menu a {
+            display: block;
+            margin: 20px;
+            padding: 15px 30px;
+            background: #fff;
+            color: #ff69b4;
+            text-decoration: none;
+            font-size: 1.5em;
+            border-radius: 30px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+        .menu a:hover {
+            background: #ff69b4;
+            color: #fff;
+            transform: scale(1.05);
+        }
+        .menu a::before {
+            content: '💕';
+            margin-right: 10px;
+        }
+        /* Front Page */
+        .front-page {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .front-page h1 {
+            position: absolute;
+            top: 20%;
+            font-family: 'Dancing Script', cursive;
+            font-size: 4em;
+            color: #ff1493;
+            text-align: center;
+            z-index: 1;
+        }
+        /* Sub-Page Styles */
+        .sub-page {
+            display: none;
+            min-height: 100vh;
+            padding: 50px 20px;
+            text-align: center;
+            position: relative;
+        }
+        .sub-page.show {
+            display: block;
+        }
+        .sub-page h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3em;
+            color: #ff1493;
+            margin-bottom: 30px;
+        }
+        /* Photos Page */
+        .photos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .photo-placeholder {
+            width: 100%;
+            height: 300px;
+            background: #fff;
+            border: 3px solid #ffb6c1;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            color: #ff69b4;
+            position: relative;
+            overflow: hidden;
+        }
+        .photo-placeholder::before {
+            content: 'Insert Photo Here 💕';
+            z-index: 0; /* keep the hint behind actual images */
+        }
+        .photo-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2; /* ensure images appear above the hint */
+        }
+        /* Uploader styles */
+        .uploader {
+            margin: 20px auto 30px;
+            max-width: 800px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .uploader input[type="file"] {
+            display: inline-block;
+            padding: 10px 15px;
+            border-radius: 10px;
+            border: 2px dashed #ffb6c1;
+            background: #fff;
+            cursor: pointer;
+        }
+        /* Song Page */
+        .song-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .song-container iframe {
+            width: 100%;
+            height: 400px;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        /* Letter Page */
+        .letter-paper {
+            max-width: 600px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 40px;
+            border: 2px solid #ffb6c1;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            position: relative;
+            font-family: 'Cinzel', serif;
+            line-height: 1.6;
+            font-size: 1.1em;
+            color: #4a2c3a;
+            min-height: 400px;
+            text-align: left;
+        }
+        .letter-paper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background: linear-gradient(to right, #ff69b4, #ffb6c1, #ff69b4);
+            border-radius: 10px 10px 0 0;
+        }
+        .letter-paper::after {
+            content: '📜';
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            font-size: 2em;
+        }
+        /* Back Button */
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #ff69b4;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.2em;
+            z-index: 15;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover {
+            background: #ff1493;
+        }
+        /* Responsive */
+        @media (max-width: 768px) {
+            .heart { font-size: 60px; }
+            .menu h1 { font-size: 2em; }
+            .sub-page h1 { font-size: 2em; }
+            .photos-grid { grid-template-columns: 1fr; }
+            .letter-paper { font-size: 1em; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Front Page -->
+    <div class="front-page" id="frontPage">
+        <h1>Happy 1st Monthsary Bub 💕</h1>
+        <div class="heart" id="heart">💖</div>
+        <!-- Decorative Bows -->
+        <div class="bow" style="top: 10%; left: 10%;"></div>
+        <div class="bow" style="top: 10%; right: 10%; transform: rotate(45deg);"></div>
+        <div class="bow" style="bottom: 10%; left: 10%;"></div>
+        <div class="bow" style="bottom: 10%; right: 10%; transform: rotate(45deg);"></div>
+    </div>
+
+    <!-- Navigation Menu (appears on heart click) -->
+    <div class="menu" id="menu">
+        <h1>Choose Your Memory 💕</h1>
+        <a onclick="showSection('photos')">Our Photos 📸</a>
+        <a onclick="showSection('song')">Our Song 🎵</a>
+        <a onclick="showSection('letter')">My Letter to You 💌</a>
+        <a onclick="showFrontPage()">Back to Home 🏠</a>
+    </div>
+
+    <!-- Photos Section -->
+    <div class="sub-page" id="photos">
+        <a onclick="showMenu()" class="back-btn">💕 Back</a>
+        <h1>Our Photos 💕</h1>
+        <div class="uploader">
+            <input id="photoInput" type="file" accept="image/*" multiple>
+        </div>
+
+        <div class="photos-grid" id="photosGrid">
+            <div class="photo-placeholder"><img src="../e05084ae-5c9a-4d70-a3f2-86d9792087ff.jpg" alt="Our Photo 1"></div>
+            <div class="photo-placeholder"><img src="../468dc227-728b-4104-8295-03a784a45ee7.jpg" alt="Our Photo 2"></div>
+            <div class="photo-placeholder"><img src="../e8fc1cb2-b1d6-4dfb-99f2-21e12c5ec4be (1).jpg" alt="Our Photo 3"></div>
+        </div>
+        
+        <!-- Decorative Bows -->
+        <div class="bow" style="top: 10%; left: 10%;"></div>
+        <div class="bow" style="top: 10%; right: 10%; transform: rotate(45deg);"></div>
+    </div>
+
+    <!-- Song Section -->
+    <div class="sub-page" id="song">
+        <a onclick="showMenu()" class="back-btn">💕 Back</a>
+        <h1>Our Song 💕</h1>
+        <div class="song-container">
+            <!-- Embed for "Those Eyes" by New West -->
+            <iframe src="https://www.youtube.com/embed/b_CpWmkhwq0" title="Those Eyes by New West" allowfullscreen></iframe>
+        </div>
+        <!-- Decorative Bows -->
+        <div class="bow" style="top: 10%; left: 10%;"></div>
+        <div class="bow" style="top: 10%; right: 10%; transform: rotate(45deg);"></div>
+    </div>
+
+    <!-- Letter Section -->
+    <div class="sub-page" id="letter">
+        <a onclick="showMenu()" class="back-btn">💕 Back</a>
+        <h1>My Letter to You 💕</h1>
+        <div class="letter-paper">
+            <p>To my dearest, Alissa,</p>
+            <p>happy 1st monthsary, bub! You probably don't expect me to write you a letter, bub, because it's kind of a new thing to me, but here I am writing you my first-ever letter for you that is somewhat decent (?). Isn't it ironic that when we were first still together, you used to write me letters, and at that time, I still didn't have any idea how to write anything? But it is also because of you that I started to learn how to write letters and poems.</p>
+            <p>As I look back to the past, bub, I sometimes wonder if I actually miss you or just the feeling since at times I look for you in all of the places that we once were, and then there are times I don't care if you were there at all. I spent years longing for you, but I thought to myself, "Do I actually miss you, or is it just the feeling and not you?" But I'm certain that what I long for is you.</p>
+            <p>I actually thought that we would never be with each other again and that we would slowly drift apart as if we were never even a thing, that you would eventually find someone and move on with your life and I wouldn't even know about it. I started to think of not marrying anyone and thought maybe I was never meant to stay not in your heart, not in your way.</p>
+            <p>But then we met each other again and the first time I saw you again bub I know that my heart still beats for you and all of the feelings keep rushing back and after the day that I saw you all I could think of was you just like what virginia woolf said "I can't tell you how piercingly and endlessly I think about you" that's why I wanted to stay in gensan for a while because I believe that there's still something between us and I cling to that hope.</p>
+            <p>I'm very happy because despite all of the paths I could've crossed it somehow leads me back to you and I question "why out of all the places must I be here?" I think that the purpose why I was in gensan was for Heavenly Father to bring us back together. It's truly a privilege to be loved by you, bub, who's not only so beautiful but also such a beautiful, kind soul. I saw you grow into a better person, bub, and how you handle different things; even if it doesn't feel right, you stay calm and composed. I hope that you will continue to grow to be the best version of yourself, and I pray for us to grow as a couple, I can already see my life with you, bub (so excited to marry you bub hehe). I just want your presence, bub. I want to hear your voice, laugh, smell your scent, and see you smile—I just want to grace your entire existence. It's just sad that we would part ways for a while; it's not even a while because it's years 😭. I will miserably miss you, bub; my heart aches just thinking about it, but I will bottle it up because I need to do the Lord's work. I long for the time that I could hold your hand, caress your hair, and feel the warmth of you again. I hope to celebrate our monthsaries and anniversaries together very soon, I love you forever bub.</p>
+            <p>Yours always,<br>Ian</p>
+        </div>
+        <!-- Decorative Bows -->
+        <div class="bow" style="top: 10%; left: 10%;"></div>
+        <div class="bow" style="top: 10%; right: 10%; transform: rotate(45deg);"></div>
+    </div>
+
+    <script>
+        const heart = document.getElementById('heart');
+        const menu = document.getElementById('menu');
+        const frontPage = document.getElementById('frontPage');
+
+        heart.addEventListener('click', () => {
+            heart.classList.add('heart-clicked');
+            setTimeout(() => {
+                frontPage.style.display = 'none';
+                menu.classList.add('show');
+            }, 500);
+        });
+
+        function showSection(sectionId) {
+            menu.classList.remove('show');
+            document.querySelectorAll('.sub-page').forEach(page => page.classList.remove('show'));
+            document.getElementById(sectionId).classList.add('show');
+        }
+
+        function showMenu() {
+            document.querySelectorAll('.sub-page').forEach(page => page.classList.remove('show'));
+            frontPage.style.display = 'none';
+            menu.classList.add('show');
+        }
+
+        function showFrontPage() {
+            menu.classList.remove('show');
+            document.querySelectorAll('.sub-page').forEach(page => page.classList.remove('show'));
+            frontPage.style.display = 'flex';
+            heart.classList.remove('heart-clicked');
+        }
+    </script>
+
+    <script>
+        // Photos uploader: preview selected images into the gallery
+        (function() {
+            const input = document.getElementById('photoInput');
+            const grid = document.getElementById('photosGrid');
+
+            function createPhotoElement(src, name) {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'photo-placeholder';
+
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = name || 'Our photo';
+
+                // Remove the ::before hint when an image is present
+                wrapper.appendChild(img);
+
+                // Click to remove (free to re-add)
+                wrapper.addEventListener('click', () => {
+                    // Revoke object URL if applicable
+                    if (src.startsWith('blob:')) URL.revokeObjectURL(src);
+                    wrapper.remove();
+                });
+
+                return wrapper;
+            }
+
+            input.addEventListener('change', (e) => {
+                const files = Array.from(e.target.files || []);
+                if (!files.length) return;
+
+                files.forEach(file => {
+                    if (!file.type.startsWith('image/')) return;
+                    const objectUrl = URL.createObjectURL(file);
+                    const el = createPhotoElement(objectUrl, file.name);
+                    grid.appendChild(el);
+                });
+
+                // Clear input so same file can be re-selected later
+                input.value = '';
+            });
+        })();
+    </script>
+
+</body>
+</html>
